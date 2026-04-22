@@ -1,7 +1,12 @@
 const products = [
-  {id:1,name:"iPhone",price:70000,img:"https://via.placeholder.com/150"},
-  {id:2,name:"Laptop",price:50000,img:"https://via.placeholder.com/150"},
-  {id:3,name:"Shoes",price:1500,img:"https://via.placeholder.com/150"}
+  {id:1,name:"iPhone 14",price:70000,img:"https://via.placeholder.com/150?text=iPhone"},
+  {id:2,name:"Dell Laptop",price:50000,img:"https://via.placeholder.com/150?text=Laptop"},
+  {id:3,name:"Running Shoes",price:1500,img:"https://via.placeholder.com/150?text=Shoes"},
+  {id:4,name:"Samsung TV",price:35000,img:"https://via.placeholder.com/150?text=TV"},
+  {id:5,name:"Wireless Earbuds",price:3000,img:"https://via.placeholder.com/150?text=Earbuds"},
+  {id:6,name:"Smart Watch",price:5000,img:"https://via.placeholder.com/150?text=Watch"},
+  {id:7,name:"Bluetooth Speaker",price:2500,img:"https://via.placeholder.com/150?text=Speaker"},
+  {id:8,name:"USB-C Cable",price:500,img:"https://via.placeholder.com/150?text=Cable"}
 ];
 
 let cart = [];
@@ -17,7 +22,7 @@ function showProducts(list){
         <img src="${p.img}">
         <h3>${p.name}</h3>
         <p>₹${p.price}</p>
-        <button onclick="addToCart(${p.id})">Add</button>
+        <button onclick="addToCart(${p.id})">Add to Cart</button>
       </div>
     `;
   });
@@ -42,8 +47,8 @@ function updateCart(){
     total+=item.price;
     list.innerHTML += `
       <li>
-        ${item.name} - ₹${item.price}
-        <button onclick="removeItem(${i})">X</button>
+        <span>${item.name} - ₹${item.price}</span>
+        <button onclick="removeItem(${i})">Remove</button>
       </li>
     `;
   });
@@ -68,7 +73,7 @@ function searchProducts(){
 /* TOGGLE CART */
 function toggleCart(){
   const box = document.getElementById("cartBox");
-  box.style.display = box.style.display==="block" ? "none":"block";
+  box.classList.toggle("show");
 }
 
 /* LOAD */
