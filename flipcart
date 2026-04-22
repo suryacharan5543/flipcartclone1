@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flipkart Clone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #f1f3f6;
+    }
+
+    header {
+      background: #2874f0;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 20px;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .search input {
+      width: 350px;
+      padding: 8px;
+      border: none;
+      border-radius: 2px;
+    }
+
+    .cart {
+      cursor: pointer;
+    }
+
+    .banner {
+      background: white;
+      margin: 10px;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+    }
+
+    .price {
+      color: green;
+      font-weight: bold;
+    }
+
+    button {
+      background: #ff9f00;
+      border: none;
+      padding: 10px;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+      border-radius: 3px;
+    }
+
+    .cart-box {
+      position: fixed;
+      right: 0;
+      top: 60px;
+      width: 250px;
+      background: white;
+      height: 100%;
+      border-left: 2px solid #ccc;
+      display: none;
+      padding: 10px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Flipkart</div>
+
+  <div class="search">
+    <input type="text" placeholder="Search..." onkeyup="searchProducts()" id="search">
+  </div>
+
+  <div class="cart" onclick="toggleCart()">
+    Cart 🛒 (<span id="count">0</span>)
+  </div>
+</header>
+
+<div class="banner">Big Sale 🔥</div>
+
+<div class="products" id="products"></div>
+
+<div class="cart-box" id="cartBox">
+  <h3>Cart</h3>
+  <ul id="cartItems"></ul>
+</div>
+
+<script>
+  const data = [
+    {name:"iPhone 14", price:70000, img:"https://via.placeholder.com/150"},
+    {name:"Laptop", price:55000, img:"https://via.placeholder.com/150"},
+    {name:"Shoes", price:1500, img:"https://via.placeholder.com/150"},
+    {name:"Headphones", price:2000, img:"https://via.placeholder.com/150"},
+    {name:"TV", price:40000, img:"https://via.placeholder.com/150"}
+  ];
+
+  let cart = [];
+
+  function showProducts(list) {
+    const box = document.getElementById("products");
+    box.innerHTML = "";
+
+    list.forEach(p => {
+      box.innerHTML += `
+        <div class="card">
+          <img src="${p.img}">
+          <h3>${p.name}</h3>
+          <p class="price">₹${p.price}</p>
+          <button onclick="addToCart('${p.name}', ${p.price})">
+            Add to Cart
+          </button>
+        </div>
+      `;
+    });
+  }
+
+  function addToCart(name, price) {
+    cart.push({name, price});
+    updateCart();
+  }
+
+  function updateCart() {
+    const list = document.getElementById("cartItems");
+    list.innerHTML = "";
+
+    cart.forEach(item => {
+      list.innerHTML += `<li>${item.name} - ₹${item.price}</li>`;
+    });
+
+    document.getElementById("count").innerText = cart.length;
+  }
+
+  function toggleCart() {
+    const box = document.getElementById("cartBox");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+  }
+
+  function searchProducts() {
+    const val = document.getElementById("search").value.toLowerCase();
+    const filtered = data.filter(p => p.name.toLowerCase().includes(val));
+    showProducts(filtered);
+  }
+
+  showProducts(data);
+</script>
+
+</body>
+</html>
