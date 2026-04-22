@@ -1,0 +1,75 @@
+const products = [
+  {id:1,name:"iPhone",price:70000,img:"https://via.placeholder.com/150"},
+  {id:2,name:"Laptop",price:50000,img:"https://via.placeholder.com/150"},
+  {id:3,name:"Shoes",price:1500,img:"https://via.placeholder.com/150"}
+];
+
+let cart = [];
+
+/* SHOW PRODUCTS */
+function showProducts(list){
+  const box = document.getElementById("products");
+  box.innerHTML = "";
+
+  list.forEach(p=>{
+    box.innerHTML += `
+      <div class="card">
+        <img src="${p.img}">
+        <h3>${p.name}</h3>
+        <p>₹${p.price}</p>
+        <button onclick="addToCart(${p.id})">Add</button>
+      </div>
+    `;
+  });
+}
+
+/* ADD TO CART */
+function addToCart(id){
+  const item = products.find(p=>p.id===id);
+  cart.push(item);
+  updateCart();
+}
+
+/* UPDATE CART */
+function updateCart(){
+  const list = document.getElementById("cartItems");
+  const count = document.getElementById("count");
+
+  list.innerHTML="";
+  let total=0;
+
+  cart.forEach((item,i)=>{
+    total+=item.price;
+    list.innerHTML += `
+      <li>
+        ${item.name} - ₹${item.price}
+        <button onclick="removeItem(${i})">X</button>
+      </li>
+    `;
+  });
+
+  list.innerHTML += `<h4>Total: ₹${total}</h4>`;
+  count.innerText = cart.length;
+}
+
+/* REMOVE */
+function removeItem(i){
+  cart.splice(i,1);
+  updateCart();
+}
+
+/* SEARCH */
+function searchProducts(){
+  const val = document.getElementById("search").value.toLowerCase();
+  const filtered = products.filter(p=>p.name.toLowerCase().includes(val));
+  showProducts(filtered);
+}
+
+/* TOGGLE CART */
+function toggleCart(){
+  const box = document.getElementById("cartBox");
+  box.style.display = box.style.display==="block" ? "none":"block";
+}
+
+/* LOAD */
+showProducts(products);
