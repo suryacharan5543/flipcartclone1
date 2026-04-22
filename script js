@@ -1,0 +1,85 @@
+const products = [
+  { id: 1, name: "iPhone 14", price: 70000, img: "https://via.placeholder.com/150" },
+  { id: 2, name: "Laptop", price: 55000, img: "https://via.placeholder.com/150" },
+  { id: 3, name: "Shoes", price: 1500, img: "https://via.placeholder.com/150" },
+  { id: 4, name: "Headphones", price: 2000, img: "https://via.placeholder.com/150" },
+  { id: 5, name: "Smart TV", price: 40000, img: "https://via.placeholder.com/150" }
+];
+
+let cart = [];
+
+/* DISPLAY PRODUCTS */
+function displayProducts(list) {
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+
+  list.forEach(product => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${product.img}">
+        <h3>${product.name}</h3>
+        <p class="price">₹${product.price}</p>
+        <button onclick="addToCart(${product.id})">Add to Cart</button>
+      </div>
+    `;
+  });
+}
+
+/* ADD TO CART */
+function addToCart(id) {
+  const item = products.find(p => p.id === id);
+  cart.push(item);
+  updateCart();
+}
+
+/* REMOVE FROM CART */
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+
+/* UPDATE CART UI */
+function updateCart() {
+  const cartList = document.getElementById("cartItems");
+  const count = document.getElementById("count");
+
+  cartList.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price;
+
+    cartList.innerHTML += `
+      <li>
+        ${item.name} - ₹${item.price}
+        <button onclick="removeFromCart(${index})">❌</button>
+      </li>
+    `;
+  });
+
+  count.innerText = cart.length;
+
+  cartList.innerHTML += `<h4>Total: ₹${total}</h4>`;
+}
+
+/* TOGGLE CART */
+function toggleCart() {
+  const cartBox = document.getElementById("cartBox");
+  cartBox.style.display =
+    cartBox.style.display === "block" ? "none" : "block";
+}
+
+/* SEARCH */
+function searchProducts() {
+  const query = document.getElementById("search").value.toLowerCase();
+
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(query)
+  );
+
+  displayProducts(filtered);
+}
+
+/* INITIAL LOAD */
+displayProducts(products);
