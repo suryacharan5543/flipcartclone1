@@ -121,34 +121,5 @@
   </footer>
 
   <script src="script.js"></script>
-  });
-
-  list.innerHTML += `<h4>Total: ₹${total}</h4>`;
-  count.innerText = cart.length;
-}
-
-/* REMOVE */
-function removeItem(i){
-  cart.splice(i,1);
-  updateCart();
-}
-
-/* SEARCH */
-function searchProducts(){
-  const val = document.getElementById("search").value.toLowerCase();
-  const filtered = products.filter(p=>p.name.toLowerCase().includes(val));
-  showProducts(filtered);
-}
-
-/* TOGGLE CART */
-function toggleCart(){
-  const box = document.getElementById("cartBox");
-  box.style.display = box.style.display==="block" ? "none":"block";
-}
-
-/* LOAD */
-showProducts(products);
-</script>
-
 </body>
 </html>
